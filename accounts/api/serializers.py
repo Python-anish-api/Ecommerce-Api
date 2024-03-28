@@ -34,10 +34,8 @@ class RegisterSerializer(serializers.ModelSerializer):
         account = Account.objects.create_user(
             email=validated_data['email'],
             username=validated_data['username'],
-            first_name=validated_data['first_name'],
-            last_name=validated_data['last_name'],
             phone_number=validated_data['phone_number'],
             password=validated_data['password'],
-            is_active=True  # You might want to send an email confirmation before setting it to True
+
         )
         return account
