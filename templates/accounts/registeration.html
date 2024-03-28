@@ -7,26 +7,25 @@
             <header class="mb-4">
                 <h4 class="card-title">Sign up</h4>
             </header>
-            <form action="{% url 'register' %}" method="POST">
+            <form action="" method="POST" id="registerForm">
                 {% csrf_token %}
-                <div class="form-row">
-                    <div class="col form-group">
-                        <label>First name</label>
-                        {{form.first_name}}
-                    </div> <!-- form-group end.// -->
-                    <div class="col form-group">
-                        <label>Last name</label>
-                        {{form.last_name}}
-                    </div> <!-- form-group end.// -->
-                </div> <!-- form-row end.// -->
+
                 <div class="form-row">
                     <div class="col form-group">
                         <label>Email address</label>
-                        {{form.email}}
+                        <input type="email" name="email" id="email" class="form-control">
+
+                    </div> 
+                </div> <!-- form-row end.// -->
+                <div class="form-row">
+                    <div class="col form-group">
+                        <label>Username</label>
+                        <input type="text" name="username" id="" class="form-control">
+
                     </div> <!-- form-group end.// -->
                     <div class="col form-group">
                         <label>Phone Number</label>
-                        {{form.phone_number}}
+                        <input type="number" name="phone_number" id="phone_number" class="form-control">
                     </div> <!-- form-group end.// -->
                 </div> <!-- form-row end.// -->
 
@@ -34,24 +33,60 @@
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label>Create password</label>
-                        {{form.password}}
+                        <input type="password" name="password" id="password" class="form-control">
 
                     </div> <!-- form-group end.// -->
                     <div class="form-group col-md-6">
                         <label>Repeat password</label>
-                        {{form.confirm_password}}
+                        <input type="password" name="password2" id="password2" class="form-control">
                     </div> <!-- form-group end.// -->
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary btn-block"> Register </button>
                 </div> <!-- form-group// -->
-                {{form.non_field_errors}}
-                {{form.email.errors}}
+               
             </form>
         </article><!-- card-body.// -->
         {% include 'includes/alerts.html' %}
     </div> <!-- card .// -->
-    <p class="text-center mt-4">Have an account? <a href="{% url 'login' %}">Log In</a></p>
+    <p class="text-center mt-4">Have an account? <a href="">Log In</a></p>
     <br><br>
 </section>
 {% endblock %}
+
+{% block js %}
+
+<script>
+    const form = document.getElementById('registerForm');
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();  // Prevent the default form submission
+
+        const formData = new FormData(form);
+        console.log(formData)
+        const jsonData = Object.fromEntries(formData);
+        console.log(jsonData)
+
+        const csrfToken = formData.get('csrfmiddlewaretoken'); // Get the CSRF token from the form
+
+        fetch('{% url "register" %}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken,
+            },
+            body: JSON.stringify(jsonData),
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);  // Handle success
+            
+            // window.location.href = '/'; // Redirect or update UI as needed
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+        });
+    });
+</script>
+{% endblock js %}

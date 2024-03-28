@@ -26,35 +26,35 @@
 
     <!-- Font awesome 5 -->
     <link href="{% static 'fonts/fontawesome/css/all.min.css' %}" type="text/css" rel="stylesheet">
-    
+
     <!-- custom style -->
     <link href="{% static 'css/ui.css' %}" rel="stylesheet" type="text/css" />
     <link href="{% static 'css/custom.css' %}" rel="stylesheet" type="text/css" />
 
     <link href="{% static 'css/responsive.css' %}" rel="stylesheet" media="only screen and (max-width: 1200px)" />
-    
-    
-    
+
+
+
     <!-- custom javascript -->
     <script src="{% static 'js/script.js' %}" type="text/javascript"></script>
     <!-- Include the PayPal JavaScript SDK -->
     <!-- <script src="https://www.paypal.com/sdk/js?client-id=AYWh6THfOsdqQVYTc58tVVX2AsVzCpEytROvAKyfl7XICXCM7ubAOMlhWYa4agBPoaQ3dyD4Vzz28IRj&currency=USD"></script> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-       <script type="text/javascript">
-           
-           
-           // jquery ready start
-           $(document).ready(function () {
-            $('.thumb a').click(function(e){
+    <script type="text/javascript">
+
+
+        // jquery ready start
+        $(document).ready(function () {
+            $('.thumb a').click(function (e) {
                 e.preventDefault();
-          
+
                 $('.mainImage img').attr('src', $(this).attr("href"));
             });
-            
+
         });
 
-</script>
-  
+    </script>
+
 
 </head>
 
@@ -70,5 +70,10 @@
 
     {% include 'includes/footer.html' %}
 
+    {% block js %}
 
+    {% endblock js %}
+
+
+</body>
 <!-- 128.199.234.187 for nbubag -->
